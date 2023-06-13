@@ -3,10 +3,13 @@
 # https://www.geeksforgeeks.org/how-to-scrape-multiple-pages-using-selenium-in-python/
 
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.support.wait import WebDriverWait
+import urllib
 
-service = ChromeService(executable_path=ChromeDriverManager().install())
+#session start
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
 url_list = [
   'https://genshin-impact.fandom.com/wiki/Aaru_Mixed_Rice',
@@ -20,9 +23,9 @@ url_list = [
   'https://genshin-impact.fandom.com/wiki/Butter_Chicken',
   'https://genshin-impact.fandom.com/wiki/Butter_Crab',
   'https://genshin-impact.fandom.com/wiki/Candied_Ajilenakh_Nut',
-  'https://genshin-impact.fandom.com/wiki/Charcoal_Baked_Ajilenakh_Cake',
+  'https://genshin-impact.fandom.com/wiki/Charcoal-Baked_Ajilenakh_Cake',
   'https://genshin-impact.fandom.com/wiki/Chicken_Tofu_Pudding',
-  'https://genshin-impact.fandom.com/wiki/Chili_Mince_Cornbread_Buns',
+  'https://genshin-impact.fandom.com/wiki/Chili-Mince_Cornbread_Buns',
   'https://genshin-impact.fandom.com/wiki/Crab_Roe_Kourayaki',
   'https://genshin-impact.fandom.com/wiki/Crab_Roe_Tofu',
   'https://genshin-impact.fandom.com/wiki/Crocodile_Jerky',
@@ -30,11 +33,11 @@ url_list = [
   'https://genshin-impact.fandom.com/wiki/Curry_Shrimp',
   'https://genshin-impact.fandom.com/wiki/Dango_Milk',
   'https://genshin-impact.fandom.com/wiki/Dragon_Beard_Noodles',
-  'https://genshin-impact.fandom.com/wiki/Dry_Braised_Salted_Fish',
+  'https://genshin-impact.fandom.com/wiki/Dry-Braised_Salted_Fish',
   'https://genshin-impact.fandom.com/wiki/Egg_Roll',
   'https://genshin-impact.fandom.com/wiki/Fish_With_Cream_Sauce',
   'https://genshin-impact.fandom.com/wiki/Five_Pickled_Treasures',
-  'https://genshin-impact.fandom.com/wiki/Fruits_Of_The_Festival',
+  'https://genshin-impact.fandom.com/wiki/Fruits_of_the_Festival',
   'https://genshin-impact.fandom.com/wiki/Gilded_Tajine',
   'https://genshin-impact.fandom.com/wiki/Grilled_Unagi_Fillet',
   'https://genshin-impact.fandom.com/wiki/Imported_Poultry',
@@ -43,12 +46,12 @@ url_list = [
   'https://genshin-impact.fandom.com/wiki/Konda_Cuisine',
   'https://genshin-impact.fandom.com/wiki/Lambad_Fish_Roll',
   'https://genshin-impact.fandom.com/wiki/Masala_Cheese_Balls',
-  'https://genshin-impact.fandom.com/wiki/Meat_Lovers_Mushroom_Pizza',
+  'https://genshin-impact.fandom.com/wiki/Meat_Lovers%27_Mushroom_Pizza',
   'https://genshin-impact.fandom.com/wiki/Milky_Mushroom_Crisp_Tower',
   'https://genshin-impact.fandom.com/wiki/Minty_Bean_Soup',
   'https://genshin-impact.fandom.com/wiki/Miso_Soup',
   'https://genshin-impact.fandom.com/wiki/Mixed_Yakisoba',
-  'https://genshin-impact.fandom.com/wiki/More_And_More',
+  'https://genshin-impact.fandom.com/wiki/More-and-More',
   'https://genshin-impact.fandom.com/wiki/Mushroom_Hodgepodge',
   'https://genshin-impact.fandom.com/wiki/Omelette_Rice',
   'https://genshin-impact.fandom.com/wiki/Oncidium_Tofu',
@@ -57,7 +60,7 @@ url_list = [
   'https://genshin-impact.fandom.com/wiki/Panipuri',
   'https://genshin-impact.fandom.com/wiki/Pita_Pocket',
   'https://genshin-impact.fandom.com/wiki/Potato_Boat',
-  'https://genshin-impact.fandom.com/wiki/Radish_And_Fish_Stew',
+  'https://genshin-impact.fandom.com/wiki/Radish_and_Fish_Stew',
   'https://genshin-impact.fandom.com/wiki/Rainbow_Aster',
   'https://genshin-impact.fandom.com/wiki/Rice_Buns',
   'https://genshin-impact.fandom.com/wiki/Rice_Cake_Soup',
@@ -78,15 +81,15 @@ url_list = [
   'https://genshin-impact.fandom.com/wiki/Sparkling_Berry_Juice',
   'https://genshin-impact.fandom.com/wiki/Special_Mushroom_Pizza',
   'https://genshin-impact.fandom.com/wiki/Starshroom',
-  'https://genshin-impact.fandom.com/wiki/Stir_Fried_Fish_Noodles',
-  'https://genshin-impact.fandom.com/wiki/Stir_Fried_Shrimp',
+  'https://genshin-impact.fandom.com/wiki/Stir-Fried_Fish_Noodles',
+  'https://genshin-impact.fandom.com/wiki/Stir-Fried_Shrimp',
   'https://genshin-impact.fandom.com/wiki/Sunset_Berry_Tea',
   'https://genshin-impact.fandom.com/wiki/Sweet_Shrimp_Sushi',
   'https://genshin-impact.fandom.com/wiki/Tahchin',
   'https://genshin-impact.fandom.com/wiki/Taiyaki',
   'https://genshin-impact.fandom.com/wiki/Tandoori_Roast_Chicken',
   'https://genshin-impact.fandom.com/wiki/Tonkotsu_Ramen',
-  'https://genshin-impact.fandom.com/wiki/Tri_Flavored_Skewer',
+  'https://genshin-impact.fandom.com/wiki/Tri-Flavored_Skewer',
   'https://genshin-impact.fandom.com/wiki/Tricolor_Dango',
   'https://genshin-impact.fandom.com/wiki/Tulumba',
   'https://genshin-impact.fandom.com/wiki/Tuna_Sushi',
@@ -95,25 +98,100 @@ url_list = [
   'https://genshin-impact.fandom.com/wiki/Wakatakeni'
 ]
 
-#session start
-driver = webdriver.Chrome()
+food = [
+'aaru-mixed-rice',
+'activated-starshroom',
+'baklava',
+'berry-mizu-manjuu',
+'bird-egg-sushi',
+'biryani',
+'bountiful-year',
+'braised-meat',
+'butter-chicken',
+'butter-crab',
+'candied-ajilenakh-nut',
+'charcoal-baked-ajilenakh-cake',
+'chicken-tofu-pudding',
+'chili-mince-cornbread-buns',
+'crab-roe-kourayaki',
+'crab-roe-tofu',
+'crocodile-jerky',
+'cured-pork-dry-hotpot',
+'curry-shrimp',
+'dango-milk',
+'dragon-beard-noodles',
+'dry-braised-salted-fish',
+'egg-roll',
+'fish-with-cream-sauce',
+'five-pickled-treasures',
+'fruits-of-the-festival',
+'gilded-tajine',
+'grilled-unagi-fillet',
+'imported-poultry',
+'invigorating-kitty-meal',
+'katsu-sandwich',
+'konda-cuisine',
+'lambad-fish-roll',
+'masala-cheese-balls',
+'meat-lovers-mushroom-pizza',
+'milky-mushroom-crisp-tower',
+'minty-bean-soup',
+'miso-soup',
+'mixed-yakisoba',
+'more-and-more',
+'mushroom-hodgepodge',
+'omelette-rice',
+'oncidium-tofu',
+'onigiri',
+'padisarah-pudding',
+'panipuri',
+'pita-pocket',
+'potato-boat',
+'radish-and-fish-stew',
+'rainbow-aster',
+'rice-buns',
+'rice-cake-soup',
+'rice-pudding',
+'rose-custard',
+'sabz-meat-stew',
+'sakura-mochi',
+'sakura-shrimp-crackers',
+'sakura-tempura',
+'samosa',
+'sangayaki',
+'sashimi-platter',
+'scented-meat-balls',
+'scorched-starshroom',
+'selva-salad',
+'shawarma-wrap',
+'soba-noodles',
+'sparkling-berry-juice',
+'special-mushroom-pizza',
+'starshroom',
+'stir-fried-fish-noodles',
+'stir-fried-shrimp',
+'sunset-berry-tea',
+'sweet-shrimp-sushi',
+'tahchin',
+'taiyaki',
+'tandoori-roast-chicken',
+'tonkotsu-ramen',
+'tri-flavored-skewer',
+'tricolor-dango',
+'tulumba',
+'tuna-sushi',
+'udon-noodles',
+'unagi-chazuke',
+'wakatakeni',
+]
 
-for url in url_list:
-    driver.get(url)
+# traverse list, find img of food item and download
+for i in range(len(url_list)):
+    driver.get(url_list[i])
 
-    title = driver.title
-    assert title == "Web form"
-
-    driver.implicitly_wait(0.5)
-
-    text_box = driver.find_element(by=By.NAME, value="my-text")
-    submit_button = driver.find_element(by=By.CSS_SELECTOR, value="button")
-
-    text_box.send_keys("Selenium")
-    submit_button.click()
-
-    message = driver.find_element(by=By.ID, value="message")
-    value = message.text
-    assert value == "Received!"
+    img = driver.find_element("xpath", '//*[@id="mw-content-text"]/div[1]/aside/section[1]/div[2]/figure/a/img | //*[@id="mw-content-text"]/div[1]/aside/section[1]/div/figure/a/img')
+    src = img.get_attribute('src')
+    
+    urllib.request.urlretrieve(src, food[i])
 
 driver.quit()
