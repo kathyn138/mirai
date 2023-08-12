@@ -19,34 +19,53 @@ table = driver.find_element("xpath", '//*[@id="mw-content-text"]/div/table[4]/tb
 rows = table.find_elements(By.TAG_NAME, 'tr')
 # prints Item "My Way"
 official_name = rows[0].find_elements(By.TAG_NAME, 'a')[1].get_attribute('innerHTML')
-tag_name = official_name.lower().replace(' ', '-')
-quality = rows[0].find_elements(By.TAG_NAME, 'img')[1].get_attribute('alt').split()[0]
+# tag_name = official_name.lower().replace(' ', '-')
+# quality = rows[0].find_elements(By.TAG_NAME, 'img')[1].get_attribute('alt').split()[0]
 # remove plural for dish_type
-dish_type = rows[0].find_elements(By.TAG_NAME, 'td')[3].get_attribute('innerText')
-effect = rows[0].find_elements(By.TAG_NAME, 'td')[4].get_attribute('innerText')
-character = rows[0].find_elements(By.TAG_NAME, 'td')[5].get_attribute('innerText')
-formattedData = (f' {tag_name}: {{\n '
-    f' "name": {official_name},\n '
-    f' "rarity": {quality},\n '
-    f' "type": "{dish_type}",\n '
-    f' "effect": "{effect}",\n '
-    f' "hasRecipe": true,\n '
-    f' "description": "???",\n '
-    f' "character": "{character}",\n '
-    f' "proficiency": "??",\n '
-    f' "baseDish": "??",\n '
-    f' "recipe": [\n '
-    f'   {{\n '
-        f' "item": "??",\n '
-        f' "quantity": 3\n '
-      f' }},\n '
-      f' {{\n '
-        f' "item": "",\n '
-        f' "quantity": 2\n '
-      f' }}\n '
-    f' ]\n '
-  f'}},')
-print(formattedData)
+# dish_type = rows[0].find_elements(By.TAG_NAME, 'td')[3].get_attribute('innerText')
+# effect = rows[0].find_elements(By.TAG_NAME, 'td')[4].get_attribute('innerText')
+# character = rows[0].find_elements(By.TAG_NAME, 'td')[5].get_attribute('innerText')
+# driver.implicitly_wait(2)
+formatted_url_name = official_name.replace(' ', '_')
+print(formatted_url_name)
+print(f'https://genshin-impact.fandom.com/wiki/{formatted_url_name}')
+driver.get(f'https://genshin-impact.fandom.com/wiki/{formatted_url_name}')
+description = driver.find_element("xpath", '//*[@id="mw-content-text"]/div/aside/section[1]/div/div[1]').get_attribute('innerText')
+base_dish = driver.find_element("xpath", '//*[@id="mw-content-text"]/div/aside/div[3]/div/span/span[2]').get_attribute('innerText')
+img = driver.find_element("xpath", '//*[@id="mw-content-text"]/div/aside/section[1]/div/figure/a/img').get_attribute('src')
+recipe_body = driver.find_element(By.CLASS_NAME, 'new_genshin_recipe_body')
+recipe_items = recipe_body.find_elements(By.CLASS_NAME, 'card-container')
+for i in recipe_items:
+    curr_quantity = i.find_element(By.CLASS_NAME, 'card-text').get_attribute('innerText')
+    curr_item = i.find_element(By.CLASS_NAME, 'card-caption').get_attribute('innerText')
+    print(curr_item)
+    print(curr_quantity)
+# formattedData = (f' {tag_name}: {{\n '
+#     f' "name": {official_name},\n '
+#     f' "rarity": {quality},\n '
+#     f' "type": "{dish_type}",\n '
+#     f' "effect": "{effect}",\n '
+#     f' "hasRecipe": true,\n '
+#     f' "description": "???",\n '
+#     f' "character": "{character}",\n '
+#     f' "proficiency": "??",\n '
+#     f' "baseDish": "??",\n '
+#     f' "recipe": [\n '
+#     f'   {{\n '
+#         f' "item": "??",\n '
+#         f' "quantity": 3\n '
+#       f' }},\n '
+#       f' {{\n '
+#         f' "item": "",\n '
+#         f' "quantity": 2\n '
+#       f' }}\n '
+#     f' ]\n '
+#   f'}},')
+print('AAAAAAA')
+print(description)
+print(base_dish)
+print(img)
+# print(formattedData)
 # src = img.get_attribute('src')
 # urllib.request.urlretrieve(src, food[i])
 
