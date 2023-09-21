@@ -35,11 +35,23 @@ base_dish = driver.find_element("xpath", '//*[@id="mw-content-text"]/div/aside/d
 img = driver.find_element("xpath", '//*[@id="mw-content-text"]/div/aside/section[1]/div/figure/a/img').get_attribute('src')
 recipe_body = driver.find_element(By.CLASS_NAME, 'new_genshin_recipe_body')
 recipe_items = recipe_body.find_elements(By.CLASS_NAME, 'card-container')
-for i in recipe_items:
-    curr_quantity = i.find_element(By.CLASS_NAME, 'card-text').get_attribute('innerText')
-    curr_item = i.find_element(By.CLASS_NAME, 'card-caption').get_attribute('innerText')
-    print(curr_item)
-    print(curr_quantity)
+
+formatted_recipe_data = (' "recipe": [\n ')
+
+for i in range(len(recipe_items) - 1):
+    curr_quantity = recipe_items[i].find_element(By.CLASS_NAME, 'card-text').get_attribute('innerText')
+    curr_item = recipe_items[i].find_element(By.CLASS_NAME, 'card-caption').get_attribute('innerText')
+    # do if loop for whether or not to include the comma at the end lol
+    formatted_recipe_item = (f'   {{\n '
+                             f' "item": "{curr_item}",\n '
+                             f' "quantity": {curr_quantity}\n '
+                             f' }},\n ')
+
+    formatted_recipe_data += formatted_recipe_item 
+
+formatted_recipe_remainder = (' ]\n '
+                              '}},')
+formatted_recipe_data += formatted_recipe_remainder
 # formattedData = (f' {tag_name}: {{\n '
 #     f' "name": {official_name},\n '
 #     f' "rarity": {quality},\n '
@@ -65,9 +77,9 @@ print('AAAAAAA')
 print(description)
 print(base_dish)
 print(img)
+print(formatted_recipe_data)
 # print(formattedData)
-# src = img.get_attribute('src')
-img_name = curr_item.replace('"', '').replace(' ', '-').lower()
-urllib.request.urlretrieve(img, img_name)
+# img_name = curr_item.replace('"', '').replace(' ', '-').lower()
+# urllib.request.urlretrieve(img, img_name)
 
 driver.quit()
