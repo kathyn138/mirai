@@ -10,7 +10,7 @@ from selenium.webdriver.common.by import By
 import urllib
 
 # session start
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(ChromeDriverManager().install())
 
 url = 'https://genshin-impact.fandom.com/wiki/Food#List_of_Special_Dishes'
 
@@ -67,6 +67,7 @@ print(base_dish)
 print(img)
 # print(formattedData)
 # src = img.get_attribute('src')
-# urllib.request.urlretrieve(src, food[i])
+img_name = curr_item.replace('"', '').replace(' ', '-').lower()
+urllib.request.urlretrieve(img, img_name)
 
 driver.quit()
