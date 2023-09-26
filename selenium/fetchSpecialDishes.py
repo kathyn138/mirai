@@ -10,27 +10,31 @@ from selenium.webdriver.common.by import By
 import urllib
 
 # session start
-driver = webdriver.Chrome(ChromeDriverManager().install())
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
-url = 'https://genshin-impact.fandom.com/wiki/Food#List_of_Special_Dishes'
+# url = 'https://genshin-impact.fandom.com/wiki/Food#List_of_Special_Dishes'
 
-driver.get(url)
-table = driver.find_element("xpath", '//*[@id="mw-content-text"]/div/table[4]/tbody')
-rows = table.find_elements(By.TAG_NAME, 'tr')
+# driver.get(url)
+# table = driver.find_element("xpath", '//*[@id="mw-content-text"]/div/table[4]/tbody')
+# rows = table.find_elements(By.TAG_NAME, 'tr')
 # prints Item "My Way"
-official_name = rows[0].find_elements(By.TAG_NAME, 'a')[1].get_attribute('innerHTML')
+# official_name = rows[0].find_elements(By.TAG_NAME, 'a')[1].get_attribute('innerHTML')
 # tag_name = official_name.lower().replace(' ', '-')
+
 # quality = rows[0].find_elements(By.TAG_NAME, 'img')[1].get_attribute('alt').split()[0]
 # remove plural for dish_type
 # dish_type = rows[0].find_elements(By.TAG_NAME, 'td')[3].get_attribute('innerText')
 # effect = rows[0].find_elements(By.TAG_NAME, 'td')[4].get_attribute('innerText')
 # character = rows[0].find_elements(By.TAG_NAME, 'td')[5].get_attribute('innerText')
 # driver.implicitly_wait(2)
-formatted_url_name = official_name.replace(' ', '_')
-print(formatted_url_name)
-print(f'https://genshin-impact.fandom.com/wiki/{formatted_url_name}')
-driver.get(f'https://genshin-impact.fandom.com/wiki/{formatted_url_name}')
-description = driver.find_element("xpath", '//*[@id="mw-content-text"]/div/aside/section[1]/div/div[1]').get_attribute('innerText')
+# formatted_url_name = official_name.replace(' ', '_')
+# print(formatted_url_name)
+# print(f'https://genshin-impact.fandom.com/wiki/{formatted_url_name}')
+# driver.get(f'https://genshin-impact.fandom.com/wiki/{formatted_url_name}')
+driver.get(f'https://genshin-impact.fandom.com/wiki/"My_Way"')
+
+description = driver.find_element("xpath", '//*[@id="mw-content-text"]/div/aside/section[1]/div/div[1]/div').get_attribute('innerText')
+# description.replace('Description', '')
 base_dish = driver.find_element("xpath", '//*[@id="mw-content-text"]/div/aside/div[3]/div/span/span[2]').get_attribute('innerText')
 img = driver.find_element("xpath", '//*[@id="mw-content-text"]/div/aside/section[1]/div/figure/a/img').get_attribute('src')
 recipe_body = driver.find_element(By.CLASS_NAME, 'new_genshin_recipe_body')
@@ -73,8 +77,8 @@ formatted_recipe_data += formatted_recipe_remainder
 #       f' }}\n '
 #     f' ]\n '
 #   f'}},')
-print('AAAAAAA')
-print(description)
+# print('AAAAAAA')
+print('buh', description)
 print(base_dish)
 print(img)
 print(formatted_recipe_data)
