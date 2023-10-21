@@ -1,7 +1,3 @@
-# https://www.geeksforgeeks.org/download-google-image-using-python-and-selenium
-# https://stackoverflow.com/questions/64799002/how-to-loop-through-a-list-of-urls-using-selenium-and-python
-# https://www.geeksforgeeks.org/how-to-scrape-multiple-pages-using-selenium-in-python/
-
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
