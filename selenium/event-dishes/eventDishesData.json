@@ -470,3 +470,13 @@
   "baseDish": "Noodles with Mountain Delicacies",
   "event": "Lantern Rite",
   
+ "lantern-rite-special-triple-layered-consommé": {
+  "name": "Lantern Rite Special Triple-Layered Consommé",
+  "rarity": 3,
+  "type": "DEF-Boosting Dish",
+  "effect": "Increases all party members' Shield strength by 30%.",
+  "hasRecipe": false,
+  "description": "Traditional cuisine made to celebrate Lantern Rite. The ham, fowl, and bamboo shoots have been sliced into threads of equal length, and they've been laid out neatly in the soup bowl after being steamed at high heat, before being covered in consommé. The layers are distinct, and the mouthfeel is salty yet fresh.",
+  "baseDish": "Triple-Layered Consommé",
+  "event": "Lantern Rite",
+  

@@ -18,8 +18,8 @@ url_list = [
 
 event_dishes_data = open("eventDishesData.json", "a")
 
-for j in range(len(url_list) - 1):
-    driver.get(url_list[j])
+for j in range(1):
+    driver.get('https://genshin-impact.fandom.com/wiki/Lantern_Rite_Special_Triple-Layered_Consomm%C3%A9')
 
     official_name = driver.find_element('xpath', '//*[@id="mw-content-text"]/div/aside/h2').get_attribute('innerText')
     tag_name = official_name.lower().replace(' ', '-').replace('"', '')
